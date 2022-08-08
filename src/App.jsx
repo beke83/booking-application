@@ -14,7 +14,7 @@ export function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/hotels" element={<List />} />
-          <Route path="/hotels/:1d" element={<Hotel />} />
+          <Route path="/hotel/:1d" element={<Hotel />} />
         </Routes>
       </BrowserRouter>
     </div>

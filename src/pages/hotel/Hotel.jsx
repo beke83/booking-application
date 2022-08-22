@@ -37,6 +37,7 @@ const Hotel = () => {
     setOpen(true);
   }
 
+//function to handle sliding of the images
   const handleMove = (direction) => {
     let newSlideNumber;
 

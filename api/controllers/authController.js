@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import bcrypt from 'bcryptjs';
 import { createError } from "../utils/error.js";
+import jwt from 'jsonwebtoken';
 
 export const register = async (req, res, next) => {
     try {
@@ -37,10 +38,19 @@ export const login = async (req, res, next) => {
 
         console.log(user);
 
-        //don't send password after successful login
+        //if password is correct create a new jwt token
+        const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin },
+            //generate a secret key
+            process.env.JWT
+        )
+
+        //don't send password after successful login to the frontend
         const { password, isAdmin, ...otherDetails } = user._doc
 
-        res.status(200).json({ ...otherDetails })
+        //adding cookies with the new token created
+        res.cookie("access_token", token, {
+            httpOnly: true,
+        }).status(200).json({ ...otherDetails })
 
     }
     catch (err) {

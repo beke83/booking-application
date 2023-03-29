@@ -55,7 +55,7 @@ export const deleteRoom = async (req, res, next) => {
         return next(err);
     }
 }
-
+   
 export const getRoom = async (req, res, next) => {
     try {
         //get a hotel by id

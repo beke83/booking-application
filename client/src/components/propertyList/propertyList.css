@@ -28,5 +28,9 @@
     margin-top: 5px;
     font-size: 15px;
     font-weight: lighter;
+}
 
+.hotel-type-name{
+    text-transform: capitalize;
+    font-weight: bold;
 }

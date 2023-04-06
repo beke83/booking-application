@@ -19,12 +19,13 @@
     object-fit: cover;
 }
 
-.pListTitles .h1{
+.pListTitles>h1{
     margin-top: 10px;
     font-size: 18px;
     font-weight: bold;
+    text-transform: capitalize;
 }
-.pListTitles .h2{
+.pListTitles>h2{
     margin-top: 5px;
     font-size: 15px;
     font-weight: lighter;

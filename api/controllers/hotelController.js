@@ -61,7 +61,7 @@ export const getHotels = async (req, res, next) => {
             ...others,
             cheapestPrice: {
                 $gt: min | 1,   // greater than minimum or 1
-                $lt: max | 50000   // less than maximum or 50000
+                $lt: max | 999   // less than maximum or 999
             }
         }).limit(req.query.limit)
         console.log(hotels)

@@ -41,6 +41,7 @@ export const getHotel = async (req, res, next) => {
     try {
         //get a hotel by id
         const hotel = await Hotel.findById(req.params.id)
+        console.log(req.params.id)
         res.status(200).json(hotel)
     }
     catch (err) {
@@ -52,10 +53,19 @@ export const getHotels = async (req, res, next) => {
     //const failed = true
     //if (failed) return next(createError(401, "You are not authenticated!"));
 
+    const { min, max, limit, ...others} = req.query
+    console.log(req.query)
     try {
         //get all hotel
-        const hotels = await Hotel.find()
-        res.status(200).json(hotels)
+        const hotels = await Hotel.find({
+            ...others,
+            cheapestPrice: {
+                $gt: min | 1,   // greater than minimum or 1
+                $lt: max | 50000   // less than maximum or 50000
+            }
+        }).limit(req.query.limit)
+        console.log(hotels)
+        res.status(200).json(hotels)     
     }
     catch (err) {
         return next(err);

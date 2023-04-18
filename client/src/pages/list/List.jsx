@@ -2,18 +2,19 @@ import React, { useState } from 'react';
 import Navbar from '../../components/navbar/Navbar';
 import Header from '../../components/header/Header';
 import './list.css';
-import { useLocation } from 'react-router-dom';
+import { use } from 'react-router-dom';
 import { format } from 'date-fns'
 import DateRange from 'react-date-range/dist/components/DateRange';
 import SearchItem from '../../components/searchItem/SearchItem';
 import useFetch from '../../hooks/useFetch'
+import { useLocation } from 'react-router-dom';
 
 const List = () => {
 
   const location = useLocation();
   //using the states sent from the navigate function
   const [destination, setDestination] = useState(location.state.destination);
-  const [date, setDate] = useState(location.state.date);
+  const [dates, setDates] = useState(location.state.dates);
   const [options, setOptions] = useState(location.state.options);
   const [openDate, setOpenDate] = useState(false);
   const [min, setMin] = useState(undefined);
@@ -43,17 +44,17 @@ const List = () => {
               <label htmlFor="">Check-in date</label>
               <span onClick={() => setOpenDate(!openDate)}>
                 {
-                  `${format(date[0].startDate, "dd/MM/yyy")} 
+                  `${format(dates[0].startDate, "dd/MM/yyy")} 
                  to 
-                 ${format(date[0].endDate, "dd/MM/yyy")}`
+                 ${format(dates[0].endDate, "dd/MM/yyy")}`
                 }
               </span>
               {openDate &&
                 (
                   <DateRange
-                    onChange={item => setDate([item.selection])}
+                    onChange={item => setDates([item.selection])}
                     minDate={new Date()}
-                    ranges={date}
+                    ranges={dates}
                   />
                 )
               }
@@ -63,11 +64,11 @@ const List = () => {
               <div className="listOptions">
                 <div className="listOptionItem">
                   <span className="listOptionText">Min price <small>per night</small></span>
-                  <input type="number" onChange={(e) => setMin(e.target.value) } className="lsOptionInput" />
+                  <input type="number" onChange={(e) => setMin(e.target.value)} className="lsOptionInput" />
                 </div>
                 <div className="listOptionItem">
                   <span className="listOptionText">Max price <small>per night</small></span>
-                  <input type="number"  onChange={(e) => setMax(e.target.value) } className="lsOptionInput" />
+                  <input type="number" onChange={(e) => setMax(e.target.value)} className="lsOptionInput" />
                 </div>
                 <div className="listOptionItem">
                   <span className="listOptionText">Adult</span>

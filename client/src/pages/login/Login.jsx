@@ -9,10 +9,10 @@ const Login = () => {
         username: undefined,
         password: undefined,
     })
-    const { loading, error, dispatch } = useContext(AuthContext);
+    const { user, loading, error, dispatch } = useContext(AuthContext);
 
     const handleChange = (e) => {
-        setCredentials(prev => ({
+        setCredentials((prev) => ({
             ...prev,
             [e.target.id]: e.target.value
         }))
@@ -28,6 +28,8 @@ const Login = () => {
             dispatch({type: "LOGIN_FAILURE", payload: error.response.data})
         }
     }
+
+    console.log(user)
 
     return (
         <div className="login">

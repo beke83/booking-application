@@ -1,4 +1,5 @@
 import Hotel from "../models/Hotel.js";
+import Room from "../models/Room.js";
 
 export const createHotel = async (req, res, next) => {
     //using the Hotel model to create new hotel
@@ -53,7 +54,7 @@ export const getHotels = async (req, res, next) => {
     //const failed = true
     //if (failed) return next(createError(401, "You are not authenticated!"));
 
-    const { min, max, limit, ...others} = req.query
+    const { min, max, limit, ...others } = req.query
     console.log(req.query)
     try {
         //get all hotel
@@ -65,7 +66,7 @@ export const getHotels = async (req, res, next) => {
             }
         }).limit(req.query.limit)
         console.log(hotels)
-        res.status(200).json(hotels)     
+        res.status(200).json(hotels)
     }
     catch (err) {
         return next(err);
@@ -106,5 +107,20 @@ export const countByType = async (req, res, next) => {
     }
     catch (err) {
         return next(err);
+    }
+}
+
+export const getHotelRooms = async (req, res, next) => {
+    try {
+        const hotel = await Hotel.findById(req.params.id);
+        console.log(hotel)
+        const list = await Promise.all(hotel.rooms.map(room => {
+            return Room.findById(room)
+        })
+        )
+        res.status(200).json(list)
+    }
+    catch (err) {
+        next(err);
     }
 }

@@ -9,6 +9,7 @@ import { format } from "date-fns" //convert the javascript date format into a re
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { SearchContext } from '../../context/SearchContext';
+import { AuthContext } from '../../context/AuthContext';
 
 const Header = ({ type }) => {
     const [openDate, setOpenDate] = useState(false);
@@ -51,6 +52,8 @@ const Header = ({ type }) => {
         navigate("/hotels", { state: { destination, dates, options } });
     }
 
+    const { user } = useContext(AuthContext);
+
     return (
         <div className="header">
             <div className={type === "list" ? "headerContainer listMode" : "headerContainer"}>
@@ -80,7 +83,7 @@ const Header = ({ type }) => {
                     <>
                         <h1 className="headerTitle">Find same comfort as home</h1>
                         <p className="headerDesc">Search deals on hotels, flight, car rentals and much more...</p>
-                        {/* <button className="headerBtn">Sign in / Register</button> */}
+                        {!user && <button className="headerBtn">Sign in / Register</button>}
                         <div className="headerSearch">
                             <div className="headerSearchItem">
                                 <FontAwesomeIcon icon={faBed} className="headerIcon" />

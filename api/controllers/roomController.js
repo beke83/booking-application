@@ -80,3 +80,19 @@ export const getRooms = async (req, res, next) => {
         return next(err);
     }
 }
+
+export const updateRoomAvailability = async (req, res, next) => {
+    try {
+       //find the room using the roomNumber ID
+       await Room.updateOne({"roomNumbers._id": req.params.id}, 
+       {
+        $push:{
+            //when updating nested properties you write it this way
+            "roomNumbers.$.unavailableDates": req.body.dates
+        }
+       })
+        res.status(200).json("Room status has been updated")
+    } catch (error) {
+        next(error.message)
+    }
+} 

@@ -12,6 +12,7 @@ import { useLocation } from 'react-router-dom';
 const List = () => {
 
   const location = useLocation();
+  console.log(location);
   //using the states sent from the navigate function
   const [destination, setDestination] = useState(location.state.destination);
   const [dates, setDates] = useState(location.state.dates);

@@ -54,7 +54,7 @@ export const getHotels = async (req, res, next) => {
     //const failed = true
     //if (failed) return next(createError(401, "You are not authenticated!"));
 
-    const { min, max, limit, ...others } = req.query
+    const { min, max, ...others } = req.query
     console.log(req.query)
     try {
         //get all hotel
@@ -74,19 +74,17 @@ export const getHotels = async (req, res, next) => {
 }
 
 export const countByCity = async (req, res, next) => {
-    const cities = req.query.cities.split(",") //change it into an array by using split
-
-    try {
-        //get all hotel
-        const list = await Promise.all(cities.map(city => {
-            //count documents is from mongoDB to count the number or cities
-            return Hotel.countDocuments({ city: city })
-        }))
-        res.status(200).json(list)
-    }
-    catch (err) {
-        return next(err);
-    }
+    const cities = req.query.cities.split(",")
+  try {
+    const list = await Promise.all(
+      cities.map((city) => {
+        return Hotel.countDocuments({ city: city });
+      })
+    );
+    res.status(200).json(list);
+  } catch (err) {
+    next(err);
+  }
 }
 
 export const countByType = async (req, res, next) => {
